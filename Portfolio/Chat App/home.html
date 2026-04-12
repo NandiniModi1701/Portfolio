@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat App</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    height: 100vh;
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6, #93c5fd);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    gap: 20px; /* Space between buttons and app */
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.controls {
+    display: flex;
+    gap: 15px;
+    z-index: 50;
+}
+
+.theme-btn {
+    padding: 10px 20px;
+    border-radius: 12px;
+    background: rgba(0,0,0,0.4);
+    color: white;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: none;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.theme-btn:hover {
+    background: rgba(0,0,0,0.6);
+}
+
+.back-btn {
+    padding: 10px 20px;
+    border-radius: 12px;
+    background: rgba(0,0,0,0.4);
+    color: white;
+    font-size: 14px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(255,255,255,0.1);
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background: rgba(0,0,0,0.6);
+}
+
+.theme-btn.active {
+    background: #2563eb;
+    border-color: #3b82f6;
+    box-shadow: 0 4px 15px rgba(37,99,235,0.4);
+}
+
+.app {
+    width: 380px;
+    height: 80vh; /* Scaled down relative to viewport height */
+    max-height: 750px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    color: white;
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Android Theme */
+.app.android {
+    border: 10px solid #1a1a2e;
+    border-radius: 36px;
+}
+
+.app.android::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 30px;
+    background: #1a1a2e;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+    z-index: 100;
+}
+
+.app.android header {
+    padding-top: 40px; /* Space for the notch */
+}
+
+/* Windows Theme */
+.app.windows {
+    width: 85vw;
+    height: 85vh;
+    max-width: 1200px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(15, 23, 42, 0.6); 
+}
+
+.app.windows header {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 15px 25px;
+}
+
+.app.windows .msg {
+    border-radius: 8px !important;
+}
+
+header {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: padding 0.5s ease;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.avatar::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 10px;
+    height: 10px;
+    background: #10b981;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+.header-info h1 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.header-info p {
+    margin: 2px 0 0;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.chat {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
+}
+
+.chat::-webkit-scrollbar {
+    width: 6px;
+}
+.chat::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+}
+
+.msg-wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 80%;
+}
+
+.msg-wrapper.me {
+    align-self: flex-end;
+    align-items: flex-end;
+}
+
+.msg-wrapper.bot {
+    align-self: flex-start;
+    align-items: flex-start;
+}
+
+.msg {
+    padding: 12px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.me .msg {
+    background: #2563eb;
+    color: white;
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
+}
+
+.bot .msg {
+    background: rgba(255, 255, 255, 0.9);
+    color: #1e293b;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.meta {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.me .meta {
+    flex-direction: row-reverse;
+}
+
+.typing-indicator {
+    display: none;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    border-bottom-left-radius: 4px;
+    align-self: flex-start;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    background: #64748b;
+    border-radius: 50%;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.dot:nth-child(1) { animation-delay: -0.32s; }
+.dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
+}
+
+.input-area {
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+input {
+    flex: 1;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    font-size: 14px;
+    outline: none;
+    transition: background 0.3s ease;
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+input:focus {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.send-btn {
+    width: 45px;
+    height: 45px;
+    border: none;
+    background: #2563eb;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease, background 0.3s ease;
+    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.4);
+    flex-shrink: 0;
+}
+
+.send-btn:hover {
+    background: #1d4ed8;
+    transform: scale(1.05);
+}
+
+.send-btn:active {
+    transform: scale(0.95);
+}
+
+svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+</style>
+</head>
+<body>
+
+<div class="controls">
+    <a href="../port.html" class="back-btn">← Back to Portfolio</a>
+    <button onclick="setTheme('android')" class="theme-btn active" id="btn-android">📱 Android</button>
+    <button onclick="setTheme('windows')" class="theme-btn" id="btn-windows">💻 Windows</button>
+</div>
+
+<div class="app android" id="app-container">
+    <header>
+        <div class="avatar">🤖</div>
+        <div class="header-info">
+            <h1>AI Assistant</h1>
+            <p>Online</p>
+        </div>
+    </header>
+    
+    <div class="chat" id="chat">
+        <!-- Messages will appear here -->
+        <div class="typing-indicator" id="typing">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+    
+    <div class="input-area">
+        <input id="text" placeholder="Type your message..." autocomplete="off" />
+        <button class="send-btn" onclick="sendMsg()">
+            <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+        </button>
+    </div>
+</div>
+
+<script>
+const chat = document.getElementById('chat');
+const text = document.getElementById('text');
+const typing = document.getElementById('typing');
+const appContainer = document.getElementById('app-container');
+const btnAndroid = document.getElementById('btn-android');
+const btnWindows = document.getElementById('btn-windows');
+
+let messageData = [];
+
+function setTheme(theme) {
+    if (theme === 'android') {
+        appContainer.className = 'app android';
+        btnAndroid.classList.add('active');
+        btnWindows.classList.remove('active');
+    } else {
+        appContainer.className = 'app windows';
+        btnWindows.classList.add('active');
+        btnAndroid.classList.remove('active');
+    }
+}
+
+function now() {
+    return new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+}
+
+function scrollToBottom() {
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function addMsg(msg, sender) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'msg-wrapper ' + sender;
+    
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'msg';
+    msgDiv.textContent = msg;
+    
+    const metaDiv = document.createElement('div');
+    metaDiv.className = 'meta';
+    
+    const checks = sender === 'me' ? `<span style="color:#60a5fa">✓✓</span>` : '';
+    metaDiv.innerHTML = `${now()} ${checks}`;
+    
+    wrapper.appendChild(msgDiv);
+    wrapper.appendChild(metaDiv);
+    
+    chat.insertBefore(wrapper, typing);
+    scrollToBottom();
+    
+    messageData.push({ text: msg, sender: sender, time: now() });
+}
+
+function getBotReply(userMsg) {
+    const lowerMsg = userMsg.toLowerCase();
+    
+    if (lowerMsg.includes('hello') || lowerMsg.includes('hi')) {
+        return "Hello there! How can I help you today? ✨";
+    } else if (lowerMsg.includes('how are you')) {
+        return "I'm just a computer program, but I'm doing fantastic! Thanks for asking. 😊";
+    } else if (lowerMsg.includes('bye')) {
+        return "Goodbye! Have a great day ahead! 👋";
+    } else if (lowerMsg.includes('thank')) {
+        return "You're very welcome! Let me know if you need anything else.";
+    } else if (lowerMsg.includes('help')) {
+        return "I can try to answer your questions or just chat with you. What's on your mind?";
+    } else if (lowerMsg.includes('weather')) {
+        return "I don't have access to the internet, but it's always sunny in my circuits! ☀️";
+    } else if (lowerMsg.includes('name')) {
+        return "I'm your friendly AI Assistant!";
+    } else if (userMsg.trim().endsWith('?')) {
+        const answers = ["That's a great question!", "I'm not entirely sure, but I can look into it.", "Interesting thought. Tell me more.", "Yes, absolutely!"];
+        return answers[Math.floor(Math.random() * answers.length)];
+    }
+    
+    const generalReplies = [
+        "That's interesting! Tell me more.",
+        "I see.",
+        "Got it!",
+        "Makes sense.",
+        "Can you elaborate on that?"
+    ];
+    return generalReplies[Math.floor(Math.random() * generalReplies.length)];
+}
+
+function sendMsg() {
+    const msg = text.value.trim();
+    if (!msg) return;
+    
+    addMsg(msg, 'me');
+    text.value = '';
+    
+    typing.style.display = 'flex';
+    scrollToBottom();
+    
+    setTimeout(() => {
+        typing.style.display = 'none';
+        const reply = getBotReply(msg);
+        addMsg(reply, 'bot');
+    }, 1000 + Math.random() * 1000);
+}
+
+text.addEventListener('keypress', e => {
+    if (e.key === 'Enter') sendMsg();
+});
+
+window.onload = () => {
+    sessionStorage.clear();
+    localStorage.clear();
+    
+    setTimeout(() => {
+        typing.style.display = 'flex';
+        scrollToBottom();
+        
+        setTimeout(() => {
+            typing.style.display = 'none';
+            addMsg("Hi! I'm your AI Assistant. How can I help you today?", 'bot');
+        }, 1200);
+    }, 500);
+};
+</script>
+</body>
+</html>

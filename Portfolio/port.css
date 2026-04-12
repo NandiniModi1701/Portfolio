@@ -1,0 +1,99 @@
+/* ===== Portfolio Website Styling ===== */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  color: rgb(71, 38, 107);
+  background: radial-gradient(circle at 30% 30%, #170f28, #634f96 80%);
+  overflow-x: hidden;
+}
+
+/* Navigation */
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  background: rgba(51, 25, 65, 0.87);
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+}
+nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s;
+}
+nav a:hover {
+  color: #6f4093;
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  text-align: center;
+  padding: 60px 20px;
+}
+.hero-text h2 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+.hero-text span {
+  color: #592f7a;
+}
+.hero-text p {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+.hero-video {
+  display: none !important;
+}
+
+/* Section styling */
+section {
+  text-align: center;
+  padding: 60px 20px;
+  max-width: 800px;
+  margin: auto;
+}
+section h2 {
+  color: #4f256f;
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+.btn, .project-btn {
+  display: inline-block;
+  background: linear-gradient(45deg, #9b5de5, #ff99cc);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.btn:hover, .project-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255, 153, 204, 0.6);
+}
+
+/* Projects */
+.project-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 30px;
+  margin: 20px auto;
+  width: 80%;
+  box-shadow: 0 0 15px rgba(199, 125, 255, 0.3);
+  transition: 0.4s;
+}
+.project-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 25px rgba(199, 125, 255, 0.5);
+}
+

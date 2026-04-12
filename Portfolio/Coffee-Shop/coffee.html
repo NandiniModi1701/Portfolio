@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>☕ Coffee Bliss Café</title>
+  <link rel="stylesheet" href="coffee.css" />
+</head>
+<body>
+
+  <!-- Back to Portfolio -->
+  <a href="../port.html" class="back-btn">← Back to Portfolio</a>
+
+  <!-- Header -->
+  <header class="header">
+    <img src="images/coffee logo.jpeg" alt="Latte Art" class="logo" />
+    <h1>Coffee Bliss Café</h1>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h2>Freshly Brewed Happiness</h2>
+    <p>Welcome to Coffee Bliss — where every sip feels like a hug.</p>
+  </section>
+
+  <!-- Menu -->
+  <section class="menu">
+    <h2>Menu <span>Coffee</span></h2>
+
+    <div class="menu-layout">
+
+      <!-- HOT -->
+      <div class="menu-box">
+        <h3>Hot</h3>
+        <div class="menu-list">
+          <p>Cappuccino <span>₹200</span></p>
+          <p>Latte <span>₹230</span></p>
+          <p>Macchiato <span>₹250</span></p>
+          <p>Americano <span>₹250</span></p>
+          <p>Irish Coffee <span>₹350</span></p>
+        </div>
+        <img src="images/hot.jpeg" alt="Hot Coffee">
+      </div>
+
+      <!-- COLD -->
+      <div class="menu-box">
+        <h3>Cold</h3>
+        <div class="menu-list">
+          <p>Cold Brew <span>₹300</span></p>
+          <p>Frappé <span>₹350</span></p>
+          <p>Café Glacé <span>₹240</span></p>
+          <p>Affogato <span>₹350</span></p>
+        </div>
+        <img src="images/cold.jpeg" alt="Cold Coffee">
+      </div>
+
+      <!-- ICED -->
+      <div class="menu-box">
+        <h3>Iced</h3>
+        <div class="menu-list">
+          <p>Iced Americano <span>₹360</span></p>
+          <p>Iced Latte <span>₹250</span></p>
+          <p>Iced Cappuccino <span>₹350</span></p>
+          <p>Iced Mocha <span>₹280</span></p>
+          <p>Iced Flat White <span>₹290</span></p>
+        </div>
+        <img src="images/iced.jpeg" alt="Iced Coffee">
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Coffee Bliss Café | Made with 💜 by Nandini</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // 🎨 moving gradient follows cursor
+    document.addEventListener('mousemove', e => {
+      const x = (e.clientX / window.innerWidth) * 100;
+      const y = (e.clientY / window.innerHeight) * 100;
+      document.body.style.background =
+        `linear-gradient(120deg, rgba(245,225,200,1) ${x}%, rgba(207,163,126,1) ${y}%)`;
+    });
+
+    // 🌿 floating coffee bean bubbles
+    const body = document.body;
+    for (let i = 0; i < 15; i++) {
+      const bean = document.createElement('div');
+      bean.classList.add('floating');
+      bean.style.width = `${20 + Math.random() * 40}px`;
+      bean.style.height = bean.style.width;
+      bean.style.left = `${Math.random() * 100}%`;
+      bean.style.top = `${Math.random() * 100}%`;
+      bean.style.animationDuration = `${8 + Math.random() * 6}s`;
+      body.appendChild(bean);
+    }
+
+    // ☕ reveal menu boxes on scroll
+    const boxes = document.querySelectorAll('.menu-box');
+    const showBoxes = () => {
+      const trigger = window.innerHeight * 0.85;
+      boxes.forEach(box => {
+        const top = box.getBoundingClientRect().top;
+        if (top < trigger) box.classList.add('visible');
+      });
+    };
+    window.addEventListener('scroll', showBoxes);
+    showBoxes(); // show immediately on load (important for short pages)
+  </script>
+
+</body>
+</html>

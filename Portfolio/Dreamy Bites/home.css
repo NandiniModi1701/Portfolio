@@ -1,0 +1,123 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Dancing+Script:wght@600&family=Pacifico&display=swap');
+
+/* ------------------------------------------------------------- */
+/*                         RESET                                 */
+/* ------------------------------------------------------------- */
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ------------------------------------------------------------- */
+/*                        HOME PAGE STYLE                        */
+/* ------------------------------------------------------------- */
+
+.home-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  /* home background image */
+  background: url("images/homeBG.jpg") center/cover fixed no-repeat;
+
+  position: relative;
+}
+
+/* dark overlay for readability */
+.home-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.28);
+  z-index: 1;
+}
+
+/* bring content above overlay */
+.hero {
+  position: relative;
+  z-index: 2;
+}
+
+/* ------------------------------------------------------------- */
+/*                         HERO TEXT                             */
+/* ------------------------------------------------------------- */
+
+.hero-text h1 {
+  font-family: 'Dancing Script', cursive;
+  font-size: 3.6rem;
+  color: #f3c5e0;
+  margin-bottom: 10px;
+}
+
+.hero-text span {
+  color: #ffcde9;
+}
+
+.hero-text p {
+  font-size: 1.2rem;
+  color: #f7ddea;
+  max-width: 500px;
+  margin: 20px auto;
+  font-weight: 500;
+}
+
+/* ------------------------------------------------------------- */
+/*                         BUTTONS                               */
+/* ------------------------------------------------------------- */
+
+.btn {
+  display: inline-block;
+  margin-top: 15px;
+  background: linear-gradient(45deg, #d48eb7, #e8b6c9);
+  color: #fff;
+  padding: 12px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  font-weight: 600;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+/* ------------------------------------------------------------- */
+/*                    BACK BUTTON (FIXED)                        */
+/* ------------------------------------------------------------- */
+
+.back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+
+  background: linear-gradient(45deg, #a36ccc, #f8a1c4);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+
+  z-index: 9999; /* IMPORTANT: keeps button clickable */
+}
+
+/* ------------------------------------------------------------- */
+/*                    OPTIONAL FOOTER                            */
+/* ------------------------------------------------------------- */
+
+footer {
+  text-align: center;
+  padding: 15px;
+  font-size: 0.9rem;
+  color: #f7ddea;
+  position: relative;
+  z-index: 2;
+}

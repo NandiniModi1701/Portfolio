@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Pacifico&display=swap');
+
+:root {
+  --c1: #f5e1c8; /* beige */
+  --c2: #cfa37e; /* caramel */
+  --c3: #7b4b2a; /* espresso */
+  --text: #2c1b0f;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text);
+  background: linear-gradient(120deg, var(--c1), var(--c2));
+  transition: background 0.3s ease;
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Floating background objects */
+.floating {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.15;
+  animation: float 10s infinite ease-in-out;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(123,75,42,0.6), rgba(0,0,0,0.1));
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+  50% { transform: translateY(-40px) translateX(20px) scale(1.1); }
+}
+
+/* Back Button */
+.back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: linear-gradient(45deg, #8b5e3b, #7b4b2a);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  z-index: 100;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+.back-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #a8734d, #5c3520);
+}
+
+/* Header */
+.header {
+  text-align: center;
+  padding-top: 80px;
+}
+.logo {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--c3);
+  box-shadow: 0 0 25px rgba(123, 75, 42, 0.4);
+}
+h1 {
+  margin: 20px 0;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--c3);
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 60px 20px 40px;
+}
+.hero h2 {
+  font-size: 2em;
+  color: var(--c3);
+  margin-bottom: 10px;
+}
+.hero p {
+  color: #4a2c18;
+  font-size: 1.1em;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Menu Section */
+.menu {
+  text-align: center;
+  padding: 80px 20px;
+}
+.menu h2 {
+  font-size: 2.8em;
+  color: #5c3520;
+  font-family: 'Pacifico', cursive;
+  margin-bottom: 30px;
+  text-shadow: 0 0 10px rgba(123,75,42,0.3);
+}
+.menu h2 span {
+  color: #8b5e3b;
+}
+
+.menu-layout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 40px;
+}
+
+/* Menu Boxes */
+.menu-box {
+  background: #fff7ee;
+  border-radius: 25px;
+  width: 330px;
+  padding: 25px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  opacity: 1; /* visible by default */
+  transform: translateY(0);
+}
+.menu-box:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+.menu-box img {
+  width: 100%;
+  height: 160px;
+  border-radius: 20px;
+  object-fit: cover;
+  margin-top: 15px;
+}
+
+/* Menu List */
+.menu-box h3 {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2em;
+  color: var(--c3);
+  margin-bottom: 20px;
+}
+
+.menu-box h3 {
+  font-family: 'Pacifico', cursive;
+  font-size: 2em;
+  color: var(--c3);
+}
+
+
+.menu-list p {
+  display: flex;
+  justify-content: space-between;
+  color: #4a2c18;
+  margin: 8px 0;
+  border-bottom: 1px dashed rgba(123, 75, 42, 0.3);
+  padding-bottom: 4px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+.menu-list p:hover {
+  color: #a8734d;
+  transform: scale(1.02);
+}
+.menu-list span {
+  color: var(--c3);
+  font-weight: 700;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 20px;
+  font-size: 0.95em;
+  color: #3c2415;
+}
+
+/* Gradient Overlay follows cursor */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 50%, rgba(123, 75, 42, 0.15), transparent 40%);
+  z-index: -1;
+  transition: background-position 0.2s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .menu-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+  .menu-box {
+    width: 85%;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  .hero h2 {
+    font-size: 1.6rem;
+  }
+}

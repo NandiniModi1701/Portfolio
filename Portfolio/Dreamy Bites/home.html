@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🍰 Dreamy Bites</title>
+  <link rel="stylesheet" href="home.css" />
+</head>
+
+<body class="home-page">
+
+  <!-- BACK TO PORTFOLIO -->
+  <a href="../port.html" class="back-btn">← Back to Portfolio</a>
+
+  <!-- HERO SECTION -->
+  <header class="hero">
+    <div class="hero-text">
+      <h1>Welcome to <span>Dreamy Bites</span></h1>
+      <p>
+        Where sweetness meets art ✨ <br>
+        Indulge in handcrafted desserts made with love.
+      </p>
+
+      <!-- BUTTON TO MENU PAGE -->
+      <a href="menu.html" class="btn">Explore Menu 🍩</a>
+    </div>
+  </header>
+
+  <!-- OPTIONAL SPARKLES EFFECT -->
+  <script>
+    for(let i=0;i<12;i++){
+      const s=document.createElement('div');
+      s.classList.add('sparkle');
+      s.style.width=`${8+Math.random()*10}px`;
+      s.style.height=s.style.width;
+      s.style.left=`${Math.random()*100}%`;
+      s.style.top=`${Math.random()*100}%`;
+      s.style.animationDuration=`${8+Math.random()*5}s`;
+      document.body.appendChild(s);
+    }
+  </script>
+
+  <script src="home.js"></script>
+
+</body>
+</html>
